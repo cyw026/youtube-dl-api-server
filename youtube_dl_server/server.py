@@ -31,7 +31,7 @@ def main():
 
     parser.add_argument(
         '--number-processes',
-        default=50,
+        default=10,
         type=int,
         help=('The number of processes the server will use. The default is: '
               '%(default)s'),
