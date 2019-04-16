@@ -1,4 +1,6 @@
 import argparse
+import socket
+from gevent.pywsgi import WSGIServer
 
 from .app import app
 from .version import __version__
@@ -24,7 +26,7 @@ def main():
 
     parser.add_argument(
         '--host',
-        default='localhost',
+        default=socket.gethostbyname(socket.gethostname()),
         type=str,
         help='The host the server will use. The default is: %(default)s',
     )
@@ -45,4 +47,9 @@ def main():
         print(__version__)
         exit(0)
 
-    app.run(args.host, args.port, processes=args.number_processes)
+    #app.debug=True
+    #app.run(args.host, args.port, processes=args.number_processes, threaded=True)
+    
+    # Production
+    http_server = WSGIServer((args.host, args.port), app)
+    http_server.serve_forever()
