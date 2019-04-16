@@ -1,6 +1,6 @@
 import argparse
 import socket
-from gevent.pywsgi import WSGIServer
+#from gevent.pywsgi import WSGIServer
 
 from .app import app
 from .version import __version__
@@ -33,7 +33,7 @@ def main():
 
     parser.add_argument(
         '--number-processes',
-        default=10,
+        default=1,
         type=int,
         help=('The number of processes the server will use. The default is: '
               '%(default)s'),
@@ -47,9 +47,9 @@ def main():
         print(__version__)
         exit(0)
 
-    #app.debug=True
-    #app.run(args.host, args.port, processes=args.number_processes, threaded=True)
+    app.debug=True
+    app.run(args.host, args.port, processes=args.number_processes, threaded=True)
     
     # Production
-    http_server = WSGIServer((args.host, args.port), app)
-    http_server.serve_forever()
+    #http_server = WSGIServer((args.host, args.port), app)
+    #http_server.serve_forever()
